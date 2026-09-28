@@ -1,26 +1,145 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  /* Surfaces */
+  --color-background: #070b12;
+  --color-surface: #051b34;
+  --color-card: #050c19;
+  --color-border: #0a1f3a;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* Text */
+  --color-foreground: #f1f6ff;
+  --color-muted-foreground: #bfd1e6;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Brand */
+  --color-primary: #ebb811;
+
+  /* Accent text colors (category tags, icons, highlights) */
+  --color-accent-purple: #7c3aed;
+  --color-accent-orange: #ea773b;
+  --color-accent-blue: #1d7be0;
+
+  /* Gradients — must live under --background-image-* to generate as bg-* utilities */
+  --background-image-gradient-gold: linear-gradient(
+    90deg,
+    #f6e073 0%,
+    #c28f1a 25.48%,
+    #f9e37a 50.48%,
+    #b78c1a 75.48%,
+    #f0d96c 100%
+  );
+  --background-image-gradient-silver: linear-gradient(
+    90deg,
+    #b1b2b4 0%,
+    #7a7b7f 25.48%,
+    #f0f0f0 50.48%,
+    #a7a8ac 75.48%,
+    #ededed 100%
+  );
+  --background-image-gradient-card: linear-gradient(
+    112.82deg,
+    #050c19 0%,
+    #051b34 100%
+  );
+
+  --background-image-gradient-blue: linear-gradient(180deg, #1D7BE0 0%, #6EADF1 100%);
+
+  --background-image-hero-glow: radial-gradient(
+  120% 120% at 82% 15%,
+  #ffffff 0%,
+  #dceafd 22%,
+  #a9cdec 48%,
+  #5f96c9 72%,
+  #3f76a8 100%
+);
+    /* Fonts */
+  --font-heading: var(--font-outfit), sans-serif;
+  --font-body: var(--font-montserrat), sans-serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+    font-family: var(--font-body);
+}
+
+
+@keyframes shine-sweep {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: -200% center;
+  }
+}
+
+ .text-shine {
+  background-image: linear-gradient(
+    100deg,
+    var(--color-primary) 30%,
+    #fff8dc 45%,
+    #ffffff 50%,
+    #fff8dc 55%,
+    var(--color-primary) 70%
+  );
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shine-sweep 8s ease-in-out infinite;
+}
+
+
+@keyframes hero-bg-zoom {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+}
+.animate-hero-zoom {
+  animation: hero-bg-zoom 18s ease-in-out infinite;
+}
+
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(24px, -20px);
+  }
+}
+.animate-float-slow {
+  animation: float-slow 12s ease-in-out infinite;
+}
+
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 32s linear infinite;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+.animate-twinkle {
+  animation: twinkle 3s ease-in-out infinite;
 }
