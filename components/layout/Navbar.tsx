@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ChevronDown, Menu, Search, X } from "lucide-react";
 import {
   motion,
   AnimatePresence,
@@ -80,15 +80,22 @@ function NavGroup({ links }: { links: typeof navLinks }) {
                     transition={{ duration: 0.2 }}
                     className="absolute left-0 top-full mt-3 min-w-[200px] rounded-lg border border-border bg-card p-2 shadow-xl"
                   >
-                    {link.children!.map((child) => (
-                      <Link
-                        key={child.href}
-                        href={child.href}
-                        className="block rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-surface hover:text-primary"
-                      >
-                        {child.label}
-                      </Link>
-                    ))}
+                    {link.children!.map((child) => {
+                      const isChildActive = pathname === child.href;
+                      return (
+                        <Link
+                          key={child.href}
+                          href={child.href}
+                          className={`block rounded-md px-3 py-2 text-sm ${
+                            isChildActive
+                              ? "bg-surface text-primary"
+                              : "text-muted-foreground hover:bg-surface hover:text-primary"
+                          }`}
+                        >
+                          {child.label}
+                        </Link>
+                      );
+                    })}
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -143,20 +150,28 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   return (
     <AnimatePresence>
       {open && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.25 }}
-          className="fixed inset-0 z-[60] bg-background/98 backdrop-blur-sm lg:hidden"
-        >
-          <div className="flex h-full flex-col overflow-y-auto px-6 pb-10 pt-6">
+        <div className="fixed inset-0 z-[60] lg:hidden">
+          {/* dimmed/blurred backdrop — click to close */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            onClick={onClose}
+            className="absolute inset-0 bg-background/50 backdrop-blur-sm"
+          />
+
+          {/* slide-in drawer, right side only */}
+          <motion.div
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+            className="absolute right-0 top-0 flex h-full w-[82%] max-w-sm flex-col overflow-y-auto bg-background px-6 pb-8 pt-6 shadow-2xl"
+          >
             <div className="flex items-center justify-between">
               <Link href="/" onClick={onClose} className="flex items-center gap-2">
                 <Image src="/images/logo.svg" alt="AFAQ" width={36} height={36} />
-                {/* <span className="font-heading text-base font-semibold tracking-wide text-primary">
-                  AFAQ
-                </span> */}
               </Link>
               <button
                 onClick={onClose}
@@ -167,7 +182,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
               </button>
             </div>
 
-            <nav className="mt-10 flex flex-1 flex-col gap-1">
+            <nav className="mt-10 flex flex-col">
               {navLinks.map((link, i) => {
                 const isActive = pathname === link.href;
                 const hasChildren = !!link.children?.length;
@@ -218,16 +233,23 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
                             className="overflow-hidden"
                           >
                             <div className="flex flex-col gap-1 pb-4 pl-4">
-                              {link.children!.map((child) => (
-                                <Link
-                                  key={child.href}
-                                  href={child.href}
-                                  onClick={onClose}
-                                  className="rounded-md py-2.5 text-sm text-muted-foreground hover:text-primary"
-                                >
-                                  {child.label}
-                                </Link>
-                              ))}
+                              {link.children!.map((child) => {
+                                const isChildActive = pathname === child.href;
+                                return (
+                                  <Link
+                                    key={child.href}
+                                    href={child.href}
+                                    onClick={onClose}
+                                    className={`rounded-md py-2.5 text-sm ${
+                                      isChildActive
+                                        ? "text-primary"
+                                        : "text-muted-foreground hover:text-primary"
+                                    }`}
+                                  >
+                                    {child.label}
+                                  </Link>
+                                );
+                              })}
                             </div>
                           </motion.div>
                         )}
@@ -242,8 +264,17 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.35, delay: 0.3 }}
-              className="mt-6"
+              className="mt-auto flex flex-col gap-3 pt-6"
             >
+              <div className="flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-2.5">
+                <Search size={16} className="text-muted-foreground" />
+                <input
+                  type="text"
+                  placeholder="Search.."
+                  className="w-full bg-transparent text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+                />
+              </div>
+
               <Link
                 href="/contact-us"
                 onClick={onClose}
@@ -252,8 +283,8 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
                 Contact Us
               </Link>
             </motion.div>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       )}
     </AnimatePresence>
   );

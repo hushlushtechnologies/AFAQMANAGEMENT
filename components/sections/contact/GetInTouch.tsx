@@ -1,4 +1,4 @@
-"use client";
+ "use client";
 
 import { motion } from "framer-motion";
 import { Phone, Mail, MessageCircle, MapPin, LucideIcon } from "lucide-react";
@@ -61,30 +61,26 @@ export default function GetInTouch() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="rounded-2xl border border-border bg-card p-5"
+                className="flex flex-col items-center rounded-2xl border border-border bg-card p-5 text-center"
               >
-                <div className="flex items-start gap-3">
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-primary text-primary">
-                    <Icon size={18} />
-                  </span>
-                  <div>
-                    <span className="block text-base font-semibold text-foreground">{title}</span>
-                    {isWhatsapp ? (
-                      
-                     <a   href={href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-2 inline-block rounded-full bg-gradient-silver px-4 py-1.5 text-xs font-semibold text-background transition-transform hover:scale-105"
-                      >
-                        Visit WhatsApp
-                      </a>
-                    ) : (
-                      <a href={href} className="mt-1 block text-sm leading-relaxed text-muted-foreground hover:text-primary">
-                        {value}
-                      </a>
-                    )}
-                  </div>
-                </div>
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-primary text-primary">
+                  <Icon size={18} />
+                </span>
+                <span className="mt-3 block text-base font-semibold text-foreground">{title}</span>
+                {isWhatsapp ? (
+                  
+                <a    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-2 inline-block rounded-full bg-gradient-silver px-4 py-1.5 text-xs font-semibold text-background transition-transform hover:scale-105"
+                  >
+                    Visit WhatsApp
+                  </a>
+                ) : (
+                  <a href={href} className="mt-1 block text-sm leading-relaxed text-muted-foreground hover:text-primary">
+                    {value}
+                  </a>
+                )}
               </motion.div>
             ))}
           </div>
@@ -116,7 +112,7 @@ export default function GetInTouch() {
         transition={{ duration: 0.7, delay: 0.2 }}
         className="mt-16 text-center"
       >
-        <a
+       <a 
           href="mailto:info@afaqmanagement.com"
           className="font-heading text-shine inline-block text-4xl font-bold sm:text-5xl md:text-6xl"
         >

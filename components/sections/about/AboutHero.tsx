@@ -1,4 +1,4 @@
-"use client";
+ "use client";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -23,9 +23,9 @@ const itemVariants = {
 
 export default function AboutHero() {
   return (
-    <section className="relative overflow-hidden">
-      {/* ambient glow behind the illustration */}
-      <div className="pointer-events-none absolute right-0 top-1/3 h-[420px] w-[420px] -translate-y-1/2 rounded-full bg-primary/10 blur-[120px]" />
+    <section className="relative">
+      {/* decorative circle border — straddles the seam with WhoWeAre below */}
+      {/* <div className="pointer-events-none absolute left-1/2 -bottom-32 h-[680px] w-[680px] -translate-x-1/2 rounded-full border-[3px] border-primary/30 blur-[px] lg:-bottom-48 lg:h-[860px] lg:w-[860px]" /> */}
 
       <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 pb-20 pt-16 lg:grid-cols-2 lg:gap-8 lg:pb-28 lg:pt-24">
         {/* left — copy */}

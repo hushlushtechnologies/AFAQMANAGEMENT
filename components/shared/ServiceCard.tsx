@@ -36,7 +36,7 @@ export default function ServiceCard({
       transition={{ duration: 0.6, delay, ease: "easeOut" }}
       className={`group flex flex-col overflow-hidden rounded-3xl border border-border bg-card ${className}`}
     >
-      <div className="relative h-48 w-full overflow-hidden">
+      <div className="relative h-40 w-full overflow-hidden">
         <Image
           src={image}
           alt={title}
@@ -46,12 +46,12 @@ export default function ServiceCard({
         />
       </div>
 
-      <div className="flex flex-1 flex-col px-6 pb-6 pt-6">
-        <span className="flex h-12 w-12 items-center justify-center rounded-full border border-primary text-primary">
-          <Icon size={20} />
+      <div className="flex flex-1 flex-col px-6 pb-5 pt-5">
+        <span className="flex h-10 w-10 items-center justify-center rounded-full border border-primary text-primary">
+          <Icon size={18} />
         </span>
 
-        <h3 className="mt-4 text-lg font-semibold text-foreground md:text-xl">
+        <h3 className="mt-3 text-lg font-semibold text-foreground md:text-xl">
           {title}
         </h3>
 
@@ -60,7 +60,7 @@ export default function ServiceCard({
         </p>
 
         {checklist && (
-          <ul className="mt-4 space-y-3.5">
+          <ul className="mt-6 space-y-5 flex flex-col gap-2.5">
             {checklist.map((item) => (
               <li
                 key={item}
@@ -75,7 +75,7 @@ export default function ServiceCard({
           </ul>
         )}
 
-        <div className="mt-5 flex flex-wrap items-center gap-3">
+        <div className="mt-auto flex flex-wrap items-center gap-3 pt-4">
           {secondaryCta && (
             <Link
               href={secondaryCta.href}

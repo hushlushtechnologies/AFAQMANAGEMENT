@@ -41,7 +41,7 @@ const emirates = [
 export default function NationwideReach() {
   return (
     <section className="  my-16  lg:my- py-10 bg-card">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 px-6 lg:grid-cols-[1.15fr_1fr] lg:gap-10">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 px-6 lg:grid-cols-[1fr_1.15fr] lg:gap-10">
         {/* left column */}
         <div>
           <motion.div
@@ -79,7 +79,7 @@ export default function NationwideReach() {
             solutions across all seven emirates
           </motion.p>
 
-          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+         <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
             {infoCards.map(({ icon: Icon, title, description }, i) => (
               <motion.div
                 key={title}
@@ -110,7 +110,7 @@ export default function NationwideReach() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative mx-auto aspect-[4/3] w-full max-w-2xl"
+         className="relative mx-auto aspect-[4/3] w-full max-w-none"
         >
           <Image
             src="/images/uae-map.png"

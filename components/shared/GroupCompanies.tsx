@@ -23,7 +23,7 @@ const companies = [
     category: "Luxury Automotive",
     description: "Offering a curated selection of luxury, premium, and high-performance vehicles for customers seeking quality, choice, and an exceptional automotive experience.",
     accent: "gold" as const,
-    href: "#",
+    href: "https://www.optimusmegatroncars.com",
   },
   {
     image: "/images/companies/hushlush-events.jpg",
@@ -33,7 +33,7 @@ const companies = [
     category: "Events & Experience",
     description: "Creating memorable weddings, corporate events, private celebration, and premium experience with creativity and precision",
     accent: "gold" as const,
-    href: "#",
+    href: "https://www.hushlushevents.com/",
   },
   {
     image: "/images/companies/hushlush-technologies.jpg",
@@ -43,7 +43,7 @@ const companies = [
     category: "Technology & Digital Solutions",
     description: "Building digital experience, software solution, creative technology, branding and growth-focused digital ecosystem",
     accent: "purple" as const,
-    href: "#",
+    href: "https://www.hushlushtechnologies.com/",
   },
   {
     image: "/images/companies/optimus-garage.jpg",
@@ -53,7 +53,7 @@ const companies = [
     category: "Automotive & Modification Place",
     description: "Premium automotive service covering vehicle care, maintenance, detailing and specialized automotive solution",
     accent: "gold" as const,
-    href: "#",
+    href: "https://www.optimusmegatroncarsgarage.com/",
   },
   {
     image: "/images/companies/afaq-properties.jpg",
@@ -63,7 +63,7 @@ const companies = [
     category: "Real Estate & Property Consultant",
     description: "Connecting buyers and investors with carefully selected residential and investment properties across the UAE",
     accent: "gold" as const,
-    href: "#",
+    href: "https://www.afaqalmanzilproperties.com/",
   },
   {
     image: "/images/companies/afaq-barakha.jpg",
@@ -73,7 +73,7 @@ const companies = [
     category: "Investment & Opportunities",
     description: "Connecting investors with selected investment opportunities through strategic insights, opportunity evaluation, and a growth-focused approach.",
     accent: "gold" as const,
-    href: "#",
+    href: "https://www.afaqalbarakha.com/",
   },
   {
     image: "/images/companies/afaq-interiors.jpg",
@@ -83,7 +83,7 @@ const companies = [
     category: "Interior Design & Fit-Out",
     description: "Transforming villas, apartments, and commercial spaces through thoughtful interior design, fit-out solutions, and functional spaces tailored to modern lifestyles.",
     accent: "gold" as const,
-    href: "#",
+    href: "https://www.afaqalmanzilinteriors.com/",
   },
   {
     image: "/images/companies/hushlush-hospitality.jpg",
@@ -93,7 +93,7 @@ const companies = [
     category: "Hospitality & Lifestyle Products",
     description: "Delivering thoughtful hospitality and lifestyle experience build around quality, service and customer satisfaction",
     accent: "orange" as const,
-    href: "#",
+    href: "https://www.hushlushs.com/",
   },
 ];
 

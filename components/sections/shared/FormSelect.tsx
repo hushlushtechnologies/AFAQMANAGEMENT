@@ -1,4 +1,4 @@
-"use client";
+ "use client";
 
 import { ChevronDown } from "lucide-react";
 
@@ -9,9 +9,10 @@ type FormSelectProps = {
   value: string;
   onChange: (v: string) => void;
   required?: boolean;
+  error?: string;
 };
 
-export default function FormSelect({ label, placeholder, options, value, onChange, required }: FormSelectProps) {
+export default function FormSelect({ label, placeholder, options, value, onChange, required, error }: FormSelectProps) {
   return (
     <div>
       <label className="text-sm text-foreground">
@@ -21,7 +22,9 @@ export default function FormSelect({ label, placeholder, options, value, onChang
         <select
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full appearance-none rounded-xl border border-border bg-surface px-4 py-3 text-sm text-foreground focus:border-primary focus:outline-none"
+          className={`w-full appearance-none rounded-xl border bg-surface px-4 py-3 text-sm text-foreground focus:outline-none ${
+            error ? "border-red-500" : "border-border focus:border-primary"
+          }`}
         >
           <option value="" disabled>
             {placeholder}
@@ -34,6 +37,7 @@ export default function FormSelect({ label, placeholder, options, value, onChang
         </select>
         <ChevronDown size={16} className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground" />
       </div>
+      {error && <p className="mt-1 text-xs text-red-500">{error}</p>}
     </div>
   );
 }

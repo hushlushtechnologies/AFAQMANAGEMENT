@@ -1,4 +1,4 @@
-"use client";
+ "use client";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -48,12 +48,12 @@ export default function AudienceCard({
       <Image src={image} alt={heading} fill unoptimized className="object-cover" />
       <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-transparent" />
 
-      <div className="relative z-10 flex h-full flex-col p-6 sm:p-8">
+      <div className="relative z-10 flex h-full flex-col p-6">
         <div className={`border-l-2 ${accentBorder} pl-3`}>
           <span className={`text-sm font-semibold ${accentText}`}>{eyebrow}</span>
         </div>
 
-        <h3 className="font-heading mt-4 text-2xl font-light leading-[1.2] text-foreground sm:text-3xl">
+        <h3 className="font-heading mt-4 text-xl font-light leading-[1.2] text-foreground sm:text-2xl">
           {heading}
         </h3>
 
@@ -61,11 +61,11 @@ export default function AudienceCard({
           {paragraph}
         </p>
 
-        <div className="mt-6 space-y-5">
+        <div className="mt-5 space-y-4">
           {features.map(({ icon: Icon, title, description }) => (
             <div key={title} className="flex items-start gap-3">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-foreground/30 text-foreground">
-                <Icon size={16} />
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-foreground/30 text-foreground">
+                <Icon size={15} />
               </span>
               <div>
                 <span className="block text-sm font-semibold text-foreground sm:text-base">{title}</span>
@@ -77,17 +77,17 @@ export default function AudienceCard({
           ))}
         </div>
 
-        <div className="mt-auto flex flex-col gap-3 pt-6">
+        <div className="mt-auto flex flex-col gap-2.5 pt-5">
           <Link
             href={primaryCta.href}
-            className={`inline-flex w-fit items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-background transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.03] ${primaryBtn}`}
+            className={`inline-flex w-fit items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-background transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.03] ${primaryBtn}`}
           >
             {primaryCta.label}
             <ArrowRight size={16} />
           </Link>
           <Link
             href={secondaryCta.href}
-            className={`inline-flex w-fit items-center gap-2 rounded-full border ${accentBorder} px-6 py-3 text-sm font-semibold ${accentText} transition-all duration-300 hover:bg-white/5`}
+            className={`inline-flex w-fit items-center gap-2 rounded-full border ${accentBorder} px-5 py-2.5 text-sm font-semibold ${accentText} transition-all duration-300 hover:bg-white/5`}
           >
             {secondaryCta.label}
           </Link>

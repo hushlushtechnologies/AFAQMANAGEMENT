@@ -1,4 +1,4 @@
-"use client";
+ "use client";
 
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -124,7 +124,7 @@ export default function DigitalSolutionsGrid() {
 
       <div className="relative mx-auto mt-16 max-w-7xl px-6">
         {/* decorative AI head watermark, spans the middle column */}
-        <div className="pointer-events-none absolute left-1/2 top-0 hidden h-full w-[34%] -translate-x-1/2 opacity-40 lg:block">
+        <div className="pointer-events-none absolute left-1/2 top-0 hidden h-full w-[50%] -translate-x-1/2 opacity-50 lg:block">
           <Image
             src="/images/services/digital-business-solutions/ai-head-watermark.png"
             alt=""

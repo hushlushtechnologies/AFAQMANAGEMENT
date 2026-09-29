@@ -1,10 +1,15 @@
-"use client";
+ "use client";
 
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
+import emailjs from "@emailjs/browser";
 import { User, Mail, Phone, Store, Globe, Upload, TrendingUp, BarChart3, Users, ShieldCheck, LucideIcon } from "lucide-react";
 import FormSelect from "../shared/FormSelect";
- 
+
+// TODO: replace with your real EmailJS IDs (https://dashboard.emailjs.com)
+const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";
+const EMAILJS_TEMPLATE_ID = "YOUR_SUBMIT_BUSINESS_TEMPLATE_ID";
+const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
 
 const trustItems: { icon: LucideIcon; title: string; description: string }[] = [
   { icon: TrendingUp, title: "Strong Market Opportunities", description: "Large addressable market with clear growth potential" },
@@ -17,33 +22,102 @@ const countryOptions = ["United Arab Emirates", "Saudi Arabia", "Bahrain", "Qata
 const cityOptions = ["Dubai", "Abu Dhabi", "Sharjah", "Ajman", "Ras Al Khaimah", "Other"];
 const industryOptions = ["Technology", "Real Estate", "Hospitality", "Automotive", "Retail", "Investment & Finance", "Other"];
 
+const initialForm = {
+  fullName: "",
+  email: "",
+  countryCode: "+971",
+  phone: "",
+  country: "",
+  companyName: "",
+  companyWebsite: "",
+  countryOfOperation: "",
+  city: "",
+  industry: "",
+  description: "",
+};
+
+type FormState = typeof initialForm;
+type FormErrors = Partial<Record<keyof FormState, string>>;
+
+function validate(values: FormState): FormErrors {
+  const errs: FormErrors = {};
+
+  if (!values.fullName.trim()) errs.fullName = "Full name is required";
+  else if (values.fullName.trim().length < 2) errs.fullName = "Enter a valid name";
+
+  if (!values.email.trim()) errs.email = "Email is required";
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email.trim())) errs.email = "Enter a valid email address";
+
+  const phoneDigits = values.phone.trim();
+  if (!phoneDigits) errs.phone = "Phone number is required";
+  else if (!/^\d{9}$/.test(phoneDigits)) errs.phone = "Enter a valid 9 digit phone number";
+
+  if (!values.country) errs.country = "Please select your country";
+
+  if (!values.companyName.trim()) errs.companyName = "Company name is required";
+
+  if (!values.companyWebsite.trim()) errs.companyWebsite = "Company website is required";
+  else if (!/^https?:\/\/[^\s]+\.[^\s]+$/.test(values.companyWebsite.trim()))
+    errs.companyWebsite = "Enter a valid URL (starting with http:// or https://)";
+
+  return errs;
+}
+
 export default function SubmitBusinessForm() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [fileName, setFileName] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
-  const [form, setForm] = useState({
-    fullName: "",
-    email: "",
-    countryCode: "+971",
-    phone: "",
-    country: "",
-    companyName: "",
-    companyWebsite: "",
-    countryOfOperation: "",
-    city: "",
-    industry: "",
-    description: "",
-  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [form, setForm] = useState<FormState>(initialForm);
 
-  function update<K extends keyof typeof form>(key: K, value: (typeof form)[K]) {
+  function update<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((prev) => ({ ...prev, [key]: value }));
+    if (errors[key]) setErrors((prev) => ({ ...prev, [key]: undefined }));
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    // TODO: wire up to an email service or API route once decided
-    console.log("Submit your business form:", form, fileName);
-    setSubmitted(true);
+
+    const validationErrors = validate(form);
+    setErrors(validationErrors);
+    if (Object.keys(validationErrors).length > 0) return;
+
+    setIsSubmitting(true);
+    setSubmitError("");
+
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          full_name: form.fullName,
+          email: form.email,
+          phone: `${form.countryCode} ${form.phone}`,
+          country: form.country,
+          company_name: form.companyName,
+          company_website: form.companyWebsite,
+          country_of_operation: form.countryOfOperation || "Not specified",
+          city: form.city || "Not specified",
+          industry: form.industry || "Not specified",
+          description: form.description || "Not provided",
+          attachment_name: fileName ?? "No file attached",
+        },
+        EMAILJS_PUBLIC_KEY
+      );
+
+      setSubmitted(true);
+      setForm(initialForm);
+      setErrors({});
+      setFileName(null);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    } catch (err) {
+      console.error("EmailJS error:", err);
+      setSubmitError("Something went wrong while sending your submission. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -87,10 +161,16 @@ export default function SubmitBusinessForm() {
           </div>
 
           {/* right — form */}
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} noValidate className="space-y-5">
             {submitted && (
               <div className="rounded-xl border border-primary bg-surface px-4 py-3 text-sm text-foreground">
                 Thanks — your business submission has been received. Our team will review it and be in touch shortly.
+              </div>
+            )}
+
+            {submitError && (
+              <div className="rounded-xl border border-red-500 bg-surface px-4 py-3 text-sm text-red-500">
+                {submitError}
               </div>
             )}
 
@@ -101,15 +181,17 @@ export default function SubmitBusinessForm() {
                 </label>
                 <div className="relative mt-2">
                   <input
-                    required
                     type="text"
                     value={form.fullName}
                     onChange={(e) => update("fullName", e.target.value)}
                     placeholder="Enter your Name"
-                    className="w-full rounded-xl border border-border bg-surface px-4 py-3 pr-10 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
+                    className={`w-full rounded-xl border bg-surface px-4 py-3 pr-10 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none ${
+                      errors.fullName ? "border-red-500" : "border-border focus:border-primary"
+                    }`}
                   />
                   <User size={16} className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground" />
                 </div>
+                {errors.fullName && <p className="mt-1 text-xs text-red-500">{errors.fullName}</p>}
               </div>
 
               <div>
@@ -118,15 +200,17 @@ export default function SubmitBusinessForm() {
                 </label>
                 <div className="relative mt-2">
                   <input
-                    required
                     type="email"
                     value={form.email}
                     onChange={(e) => update("email", e.target.value)}
                     placeholder="Enter your Email ID"
-                    className="w-full rounded-xl border border-border bg-surface px-4 py-3 pr-10 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
+                    className={`w-full rounded-xl border bg-surface px-4 py-3 pr-10 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none ${
+                      errors.email ? "border-red-500" : "border-border focus:border-primary"
+                    }`}
                   />
                   <Mail size={16} className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground" />
                 </div>
+                {errors.email && <p className="mt-1 text-xs text-red-500">{errors.email}</p>}
               </div>
 
               <div>
@@ -146,16 +230,19 @@ export default function SubmitBusinessForm() {
                   </select>
                   <div className="relative flex-1">
                     <input
-                      required
                       type="tel"
                       value={form.phone}
-                      onChange={(e) => update("phone", e.target.value)}
+                      onChange={(e) => update("phone", e.target.value.replace(/\D/g, "").slice(0, 9))}
                       placeholder="Enter your Number"
-                      className="w-full rounded-xl border border-border bg-surface px-4 py-3 pr-10 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
+                      maxLength={9}
+                      className={`w-full rounded-xl border bg-surface px-4 py-3 pr-10 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none ${
+                        errors.phone ? "border-red-500" : "border-border focus:border-primary"
+                      }`}
                     />
                     <Phone size={16} className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground" />
                   </div>
                 </div>
+                {errors.phone && <p className="mt-1 text-xs text-red-500">{errors.phone}</p>}
               </div>
 
               <FormSelect
@@ -165,6 +252,7 @@ export default function SubmitBusinessForm() {
                 value={form.country}
                 onChange={(v) => update("country", v)}
                 required
+                error={errors.country}
               />
 
               <div>
@@ -173,15 +261,17 @@ export default function SubmitBusinessForm() {
                 </label>
                 <div className="relative mt-2">
                   <input
-                    required
                     type="text"
                     value={form.companyName}
                     onChange={(e) => update("companyName", e.target.value)}
                     placeholder="Enter your Business Name"
-                    className="w-full rounded-xl border border-border bg-surface px-4 py-3 pr-10 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
+                    className={`w-full rounded-xl border bg-surface px-4 py-3 pr-10 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none ${
+                      errors.companyName ? "border-red-500" : "border-border focus:border-primary"
+                    }`}
                   />
                   <Store size={16} className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground" />
                 </div>
+                {errors.companyName && <p className="mt-1 text-xs text-red-500">{errors.companyName}</p>}
               </div>
 
               <div>
@@ -190,15 +280,17 @@ export default function SubmitBusinessForm() {
                 </label>
                 <div className="relative mt-2">
                   <input
-                    required
                     type="url"
                     value={form.companyWebsite}
                     onChange={(e) => update("companyWebsite", e.target.value)}
                     placeholder="Enter your Website URL"
-                    className="w-full rounded-xl border border-border bg-surface px-4 py-3 pr-10 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
+                    className={`w-full rounded-xl border bg-surface px-4 py-3 pr-10 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none ${
+                      errors.companyWebsite ? "border-red-500" : "border-border focus:border-primary"
+                    }`}
                   />
                   <Globe size={16} className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground" />
                 </div>
+                {errors.companyWebsite && <p className="mt-1 text-xs text-red-500">{errors.companyWebsite}</p>}
               </div>
 
               <FormSelect
@@ -269,9 +361,10 @@ export default function SubmitBusinessForm() {
 
             <button
               type="submit"
-              className="w-full rounded-full bg-gradient-gold px-6 py-3.5 text-sm font-semibold text-background transition-all duration-300 hover:scale-[1.01] hover:shadow-[0_0_28px_rgba(235,184,17,0.5)]"
+              disabled={isSubmitting}
+              className="w-full rounded-full bg-gradient-gold px-6 py-3.5 text-sm font-semibold text-background transition-all duration-300 hover:scale-[1.01] hover:shadow-[0_0_28px_rgba(235,184,17,0.5)] disabled:cursor-not-allowed disabled:opacity-60"
             >
-              Send Enquiry →
+              {isSubmitting ? "Sending..." : "Send Enquiry →"}
             </button>
           </form>
         </div>

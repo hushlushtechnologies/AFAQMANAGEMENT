@@ -1,4 +1,4 @@
-"use client";
+ "use client";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -32,7 +32,7 @@ const marqueeItems = [
 
 export default function WhoWeAre() {
   return (
-    <section className="  my-16   lg:my-24">
+    <section className="relative my-16 lg:my-24">
       <motion.div
         initial={{ opacity: 0, y: 32 }}
         whileInView={{ opacity: 1, y: 0 }}
