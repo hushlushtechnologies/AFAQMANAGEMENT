@@ -43,7 +43,7 @@ const processSteps: { icon: LucideIcon; title: string; description: string }[] =
 
 const processIndents = ["lg:ml-16", "lg:ml-8", "lg:ml-0", "lg:ml-8", "lg:ml-16"];
 
-const NODE_GAP = 28; // px between a card's right edge and its timeline node
+const NODE_GAP = 28; 
 
 export default function BusinessChallenges() {
   const containerRef = useRef<HTMLDivElement>(null);
