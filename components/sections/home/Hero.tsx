@@ -20,9 +20,9 @@ import {
 
 const socialLinks = [
   { icon: FaWhatsapp, href: "https://wa.me/971527094940", label: "WhatsApp" },
-  { icon: FaLinkedinIn, href: "https://www.linkedin.com", label: "LinkedIn" },
+  { icon: FaLinkedinIn, href: "https://www.linkedin.com/company/afaq-alkhaleej-management-consultancy/?viewAsMember=true", label: "LinkedIn" },
   { icon: FaInstagram, href: "https://www.instagram.com/afaq_alkhaleej_uae", label: "Instagram" },
-  { icon: FaFacebookF, href: "https://www.facebook.com", label: "Facebook" },
+  { icon: FaFacebookF, href: "https://www.facebook.com/share/1FkjLR7mVF/", label: "Facebook" },
 ];
 
 const stats = [

@@ -37,9 +37,9 @@ const groupLinks = [
 
 const socialLinks = [
   { icon: FaWhatsapp, label: "WhatsApp", href: "https://wa.me/971527094940" },
-  { icon: FaLinkedinIn, label: "LinkedIn", href: "https://www.linkedin.com/company/afaqalkhaleej" },
+  { icon: FaLinkedinIn, label: "LinkedIn", href: "https://www.linkedin.com/company/afaq-alkhaleej-management-consultancy/?viewAsMember=true" },
   { icon: FaInstagram, label: "Instagram", href: "https://www.instagram.com/afaq_alkhaleej_uae" },
-  { icon: FaFacebookF, label: "Facebook", href: "https://www.facebook.com/afaqalkhaleej" },
+  { icon: FaFacebookF, label: "Facebook", href: "https://www.facebook.com/share/1FkjLR7mVF/" },
 ];
 
 function FooterColumn({ title, links }: { title: string; links: { label: string; href: string }[] }) {
