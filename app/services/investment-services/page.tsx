@@ -1,5 +1,4 @@
-"use client";
-
+ import type { Metadata } from "next";
 import WhyAfaq from "@/components/sections/home/WhyAfaq";
 import ReadyForNextStage from "@/components/sections/investment-opportunities/ReadyForNextStage";
 import SeekingInvestmentCta from "@/components/sections/investment-opportunities/SeekingInvestmentCta";
@@ -9,7 +8,6 @@ import InvestmentOverview from "@/components/services/investment-services/Invest
 import InvestmentServiceHero from "@/components/services/investment-services/InvestmentServiceHero";
 import SectorGrid from "@/components/services/investment-services/SectorGrid";
 import ClosingCta from "@/components/shared/ClosingCta";
-import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Investment Services",
@@ -26,17 +24,16 @@ export const metadata: Metadata = {
   },
 };
 
-
 export default function InvestmentServicesPage() {
   return (
     <main>
       <InvestmentServiceHero />
       <InvestmentOverview />
       <SectorGrid />
-      <ReadyForNextStage/>
+      <ReadyForNextStage />
       {/* <SeekingInvestmentCta /> */}
       <SeekingInvestmentSplit />
-       <WhyAfaq />
+      <WhyAfaq />
       <Faq
         faqs={[
           {
