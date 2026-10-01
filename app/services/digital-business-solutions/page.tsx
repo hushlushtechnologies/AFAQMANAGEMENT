@@ -4,6 +4,23 @@ import DigitalSolutionsGrid from "@/components/services/digital-business-solutio
 import DigitalSolutionsHero from "@/components/services/digital-business-solutions/DigitalSolutionsHero";
 import SolutionsForYourStage from "@/components/services/digital-business-solutions/SolutionsForYourStage";
 import ClosingCta from "@/components/shared/ClosingCta";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Digital Business Solutions",
+  description:
+    "Afaq Al Khaleej Management Consultants delivers digital business solutions — websites, web and mobile apps, custom software, automation, and UI/UX design for businesses in the UAE.",
+  alternates: {
+    canonical: "/services/digital-business-solutions",
+  },
+  openGraph: {
+    title: "Digital Business Solutions | Afaq Al Khaleej Management Consultants",
+    description:
+      "Websites, web applications, mobile apps, custom software, automation, system integrations, and UI/UX design for growing businesses in the UAE.",
+    url: "/services/digital-business-solutions",
+  },
+};
+
 
 export default function DigitalBusinessSolutionsPage() {
   return (

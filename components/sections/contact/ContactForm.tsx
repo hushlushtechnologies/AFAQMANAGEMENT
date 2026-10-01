@@ -5,10 +5,9 @@ import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
 import { User, Mail, Phone, ChevronDown, Clock, ShieldCheck, Headset, LucideIcon } from "lucide-react";
 
-// TODO: replace with your real EmailJS IDs (https://dashboard.emailjs.com)
-const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";
-const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
-const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
+const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!;
+const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!;
+const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!;
 
 const trustItems: { icon: LucideIcon; title: string; description: string }[] = [
   { icon: Clock, title: "Quick Response", description: "We aim to respond within 24 hours" },
@@ -48,8 +47,6 @@ type FormErrors = Partial<Record<keyof FormState, string>>;
 
 function validate(values: FormState): FormErrors {
   const errs: FormErrors = {};
-
-  
 
   if (!values.fullName.trim()) errs.fullName = "Full name is required";
   else if (values.fullName.trim().length < 2) errs.fullName = "Enter a valid name";
@@ -283,7 +280,7 @@ export default function ContactForm() {
                     <option value="+973">+973</option>
                     <option value="+974">+974</option>
                   </select>
-                             <div className="relative flex-1">
+                  <div className="relative flex-1">
                     <input
                       type="tel"
                       value={form.phone}

@@ -22,7 +22,7 @@ export function SeekingInvestmentContent() {
         "Building a business with strong potential? Afaq Al Khaleej Management explores direct investment and strategic partnership opportunities with promising businesses across the UAE.",
         "We look beyond the idea—evaluating the market, business model, financial potential, leadership, and scalability to identify businesses where we believe meaningful long-term value can be built together.",
       ]}
-      primaryCta={{ label: "Explore Investment Opportunities", href: "/services/afaq-investors" }}
+      primaryCta={{ label: "Explore Investment Opportunities", href: "/investment-opportunities#submit-business" }}
       secondaryCta={{ label: "Submit your Business", href: "/contact-us" }}
       image={{
         src: "/images/investment/pitch-folder.png",

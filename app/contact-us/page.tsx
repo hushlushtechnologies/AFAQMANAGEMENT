@@ -3,7 +3,25 @@ import ContactHero from '@/components/sections/contact/ContactHero'
 import GetInTouch from '@/components/sections/contact/GetInTouch'
 import Faq from '@/components/sections/shared/Faq'
 import ClosingCta from '@/components/shared/ClosingCta'
+import { Metadata } from 'next'
 import React from 'react'
+
+export const metadata: Metadata = {
+  title: "Contact Us",
+  description:
+    "Get in touch with Afaq Al Khaleej Management Consultants for business setup, investment advisory, PRO services, and company formation support across the UAE.",
+  alternates: {
+    canonical: "/contact-us",
+  },
+  openGraph: {
+    title: "Contact Afaq Al Khaleej Management Consultants",
+    description:
+      "Get in touch for business setup, investment advisory, PRO services, and company formation support across the UAE.",
+    url: "/contact-us",
+  },
+};
+
+
 
 export default function page() {
   return (

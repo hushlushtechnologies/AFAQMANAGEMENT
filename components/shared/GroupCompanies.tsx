@@ -13,7 +13,7 @@ const companies = [
     category: "Investment & Business Consultancy",
     description: "Connecting investors, entrepreneurs and business with trusted opportunities and end to end business solutions across the UAE",
     accent: "gold" as const,
-    href: "#",
+    href: "https://www.afaqmanagement.com/",
   },
   {
     image: "/images/companies/optimus-cars.jpg",

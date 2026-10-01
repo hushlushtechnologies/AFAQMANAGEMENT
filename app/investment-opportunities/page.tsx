@@ -1,3 +1,4 @@
+ import type { Metadata } from "next";
 import EvaluationProcess from "@/components/sections/investment-opportunities/EvaluationProcess";
 import InvestmentCriteria from "@/components/sections/investment-opportunities/InvestmentCriteria";
 import InvestmentPhilosophy from "@/components/sections/investment-opportunities/InvestmentPhilosophy";
@@ -7,6 +8,21 @@ import Faq from "@/components/sections/shared/Faq";
 import WhyPartner from "@/components/sections/shared/WhyPartner";
 import ClosingCta from "@/components/shared/ClosingCta";
 
+export const metadata: Metadata = {
+  title: "Investment Opportunities",
+  description:
+    "Explore investment opportunities with Afaq Al Khaleej Management Consultants, or submit your business for evaluation and connect with investors across the UAE.",
+  alternates: {
+    canonical: "/investment-opportunities",
+  },
+  openGraph: {
+    title: "Investment Opportunities | Afaq Al Khaleej Management Consultants",
+    description:
+      "Explore investment opportunities, our evaluation process, and submit your business to connect with investors across the UAE.",
+    url: "/investment-opportunities",
+  },
+};
+
 export default function InvestmentOpportunitiesPage() {
   return (
     <main>
@@ -14,9 +30,9 @@ export default function InvestmentOpportunitiesPage() {
       <InvestmentPhilosophy />
       <InvestmentCriteria />
       <EvaluationProcess />
-       <WhyPartner />
-       <SubmitBusinessForm />
-       <Faq
+      <WhyPartner />
+      <SubmitBusinessForm />
+      <Faq
         faqs={[
           {
             question: "Does Afaq Al Khaleej invest directly in businesses?",
@@ -50,7 +66,7 @@ export default function InvestmentOpportunitiesPage() {
           },
         ]}
       />
-         <ClosingCta />
+      <ClosingCta />
     </main>
   );
 }

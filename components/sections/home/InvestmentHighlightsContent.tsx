@@ -17,7 +17,7 @@ export function InvestmentHighlightsContent() {
       paragraphs={[
         "Afaq Al Khaleej connects investors with carefully selected business and investment opportunities across the UAE. Backed by market insights, feasibility analysis and strategic guidance, we help you make informed investment decisions.",
       ]}
-      primaryCta={{ label: "Explore Investment Service", href: "/services/investment-services" }}
+                primaryCta={{ label: "Explore Afaq Investment Service", href: "/investment-opportunities#submit-business" }}
       secondaryCta={{ label: "Talk to our Consultant", href: "/contact-us" }}
       image={{
         src: "/images/investment/growth-chart.png",

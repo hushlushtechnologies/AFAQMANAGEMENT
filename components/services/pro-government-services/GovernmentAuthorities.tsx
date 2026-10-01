@@ -27,33 +27,33 @@ const rightAuthorities: Authority[] = [
 
 // EDIT THESE to move cards around:
 //   top → % vertical center within the diagram column (matches the artwork's dots)
-//   x   → px horizontal offset AWAY from the hub
+//   x   → px horizontal offset AWAY from the hub (kept small enough to stay on screen)
 const leftPositions = [
-  { top: 10, x: 150 },
-  { top: 30, x: 256 },
-  { top: 50, x: 370 },
-  { top: 70, x: 255 },
-  { top: 90, x: 150 },
+  { top: 15, x: 12 },
+  { top: 33, x: 190 },
+  { top: 50, x: 250 },
+  { top: 65, x: 170 },
+  { top: 85, x: 90 },
 ];
 const rightPositions = [
-  { top: 10, x: 150 },
-  { top: 30, x: 256 },
-  { top: 50, x: 370 },
-  { top: 70, x: 255 },
-  { top: 90, x: 150 },
+  { top: 15, x: 12 },
+  { top: 33, x: 190 },
+  { top: 50, x: 250 },
+  { top: 68, x: 170 },
+  { top: 87, x: 90 },
 ];
 
 function AuthorityCard({ authority, accent }: { authority: Authority; accent: "blue" | "gold" }) {
   const border = accent === "blue" ? "border-accent-blue" : "border-primary";
   return (
-    <div className={`relative w-full max-w-sm rounded-2xl border ${border} bg-card p-5`}>
-      <div className="flex items-start gap-4">
-        <span className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full border border-border bg-background">
-          <Image src={authority.logo} alt={authority.title} width={28} height={28} unoptimized className="object-contain" />
+    <div className={`relative w-full rounded-2xl border ${border} bg-card p-4`}>
+      <div className="flex items-center gap-3">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full border border-border bg-background">
+          <Image src={authority.logo} alt={authority.title} width={22} height={22} unoptimized className="object-contain" />
         </span>
         <div>
-          <h3 className="text-lg font-semibold text-foreground">{authority.title}</h3>
-          <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{authority.description}</p>
+          <h3 className="text-base font-semibold text-foreground">{authority.title}</h3>
+          <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{authority.description}</p>
         </div>
       </div>
     </div>
@@ -90,13 +90,12 @@ export default function GovernmentAuthorities() {
         <div className="mx-auto mt-6 h-px w-16 bg-primary/60" />
       </div>
 
-      {/* desktop hub-and-spoke */}
-      <div className="relative mx-auto mt-20 hidden max-w-6xl grid-cols-[1fr_140px_1fr] items-center gap-6 lg:grid">
-        
+      {/* desktop hub-and-spoke — only from xl up, so it always has room */}
+      <div className="relative mx-auto mt-20 hidden max-w-7xl grid-cols-[1fr_140px_1fr] items-center gap-6 xl:grid">
         <svg
           viewBox="0 0 524 721"
           preserveAspectRatio="none"
-          style={{ transform: "scale(0.65)", transformOrigin: "50% 50%" }}
+          style={{ transform: "scale(0.5)", transformOrigin: "50% 50%" }}
           className="pointer-events-none absolute inset-0 h-full w-full"
         >
           <path
@@ -115,7 +114,7 @@ export default function GovernmentAuthorities() {
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.5, delay: i * 0.08 }}
               style={{ top: `${leftPositions[i].top}%`, right: `${leftPositions[i].x}px` }}
-              className="absolute w-full max-w-sm -translate-y-1/2"
+              className="absolute w-60 -translate-y-1/2"
             >
               <AuthorityCard authority={a} accent="blue" />
             </motion.div>
@@ -150,7 +149,7 @@ export default function GovernmentAuthorities() {
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.5, delay: i * 0.08 }}
               style={{ top: `${rightPositions[i].top}%`, left: `${rightPositions[i].x}px` }}
-              className="absolute w-full max-w-sm -translate-y-1/2"
+              className="absolute w-60 -translate-y-1/2"
             >
               <AuthorityCard authority={a} accent="gold" />
             </motion.div>
@@ -158,8 +157,8 @@ export default function GovernmentAuthorities() {
         </div>
       </div>
 
-      {/* mobile/tablet fallback — simple stacked list */}
-      <div className="mx-auto mt-14 flex max-w-2xl flex-col gap-4 px-6 lg:hidden">
+      {/* mobile/tablet fallback — simple stacked list, shown below xl */}
+      <div className="mx-auto mt-14 flex max-w-2xl flex-col gap-4 px-6 xl:hidden">
         {[...leftAuthorities, ...rightAuthorities].map((a, i) => (
           <motion.div
             key={a.title}
@@ -169,7 +168,7 @@ export default function GovernmentAuthorities() {
             transition={{ duration: 0.5, delay: (i % 5) * 0.06 }}
             className="rounded-2xl border border-border bg-card p-5"
           >
-            <div className="flex items-start gap-4">
+            <div className="flex items-center gap-4">
               <span className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full border border-border bg-background">
                 <Image src={a.logo} alt={a.title} width={28} height={28} unoptimized className="object-contain" />
               </span>

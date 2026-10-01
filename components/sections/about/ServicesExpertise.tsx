@@ -1,6 +1,6 @@
-"use client";
+ "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 
@@ -59,6 +59,15 @@ const services = [
 export default function ServicesExpertise() {
   const [active, setActive] = useState(0);
   const current = services[active];
+
+  // auto-advance to the next service every 10s; restarts whenever `active`
+  // changes, whether from this timer or a manual click
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActive((prev) => (prev + 1) % services.length);
+    }, 10000);
+    return () => clearInterval(timer);
+  }, [active]);
 
   return (
     <section className="mx-4 my-16 md:mx-8 lg:mx-12 lg:my-24">

@@ -11,6 +11,11 @@ import GroupCompanies from "@/components/shared/GroupCompanies";
 import SeekingInvestmentSplit from "@/components/sections/shared/SeekingInvestmentSplit";
 import Services from "@/components/shared/Services";
 import InvestmentSection from "@/components/sections/home/InvestmentSection";
+import { Metadata } from "next";
+
+
+
+ 
 
 export default function Home() {
   return (

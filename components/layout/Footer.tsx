@@ -1,4 +1,4 @@
-"use client";
+ "use client";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -24,22 +24,22 @@ const serviceLinks = [
 ];
 
 const groupLinks = [
-  { label: "Afaq Al Khaleej Management Consultant", href: "#" },
-  { label: "Afaq Al Manzil Properties", href: "#" },
-  { label: "Afaq Al Manzil Interiors", href: "#" },
-  { label: "Afaq Al Barakha Investment", href: "#" },
-  { label: "Hush Lush Technologies", href: "#" },
-  { label: "Hush Lush Events", href: "#" },
-  { label: "Hush Lush Hospitality", href: "#" },
-  { label: "Optimus Megatron Garage", href: "#" },
-  { label: "Optimus Megatron Cars", href: "#" },
+  { label: "Afaq Al Khaleej Management Consultant", href: "https://www.afaqmanagement.com/" },
+  { label: "Afaq Al Manzil Properties", href: "https://www.afaqalmanzilproperties.com/" },
+  { label: "Afaq Al Manzil Interiors", href: "https://www.afaqalmanzilinteriors.com/" },
+  { label: "Afaq Al Barakha Investment", href: "https://www.afaqalbarakha.com/" },
+  { label: "Hush Lush Technologies", href: "https://www.hushlushtechnologies.com/" },
+  { label: "Hush Lush Events", href: "https://www.hushlushevents.com/" },
+  { label: "Hush Lush Hospitality", href: "https://www.hushlushs.com/" },
+  { label: "Optimus Megatron Garage", href: "https://www.optimusmegatroncarsgarage.com/" },
+  { label: "Optimus Megatron Cars", href: "https://www.optimusmegatroncars.com" },
 ];
 
 const socialLinks = [
-  { icon: FaWhatsapp, label: "WhatsApp", href: "#" },
-  { icon: FaLinkedinIn, label: "LinkedIn", href: "#" },
-  { icon: FaInstagram, label: "Instagram", href: "#" },
-  { icon: FaFacebookF, label: "Facebook", href: "#" },
+  { icon: FaWhatsapp, label: "WhatsApp", href: "https://wa.me/971527094940" },
+  { icon: FaLinkedinIn, label: "LinkedIn", href: "https://www.linkedin.com/company/afaqalkhaleej" },
+  { icon: FaInstagram, label: "Instagram", href: "https://www.instagram.com/afaq_alkhaleej_uae" },
+  { icon: FaFacebookF, label: "Facebook", href: "https://www.facebook.com/afaqalkhaleej" },
 ];
 
 function FooterColumn({ title, links }: { title: string; links: { label: string; href: string }[] }) {
@@ -47,16 +47,30 @@ function FooterColumn({ title, links }: { title: string; links: { label: string;
     <div>
       <h4 className="text-sm font-semibold text-muted-foreground">{title}</h4>
       <ul className="mt-5 space-y-3.5">
-        {links.map((link) => (
-          <li key={link.label}>
-            <Link
-              href={link.href}
-              className="text-sm text-foreground/90 transition-colors hover:text-primary"
-            >
-              {link.label}
-            </Link>
-          </li>
-        ))}
+        {links.map((link) => {
+          const isExternal = /^https?:\/\//.test(link.href);
+          return (
+            <li key={link.label}>
+              {isExternal ? (
+                <a
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-foreground/90 transition-colors hover:text-primary"
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <Link
+                  href={link.href}
+                  className="text-sm text-foreground/90 transition-colors hover:text-primary"
+                >
+                  {link.label}
+                </Link>
+              )}
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
@@ -75,13 +89,12 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr_1.2fr]">
           {/* logo + about + contact */}
           <div>
-       <div className="flex flex-col items-center gap-0.5">
-  <Image src="/images/logo.svg" alt="AFAQ" width={56} height={56} className="h-14 w-14 object-contain" />
-  {/* <span className="font-heading mt-1 text-lg font-semibold tracking-wide text-primary">AFAQ</span> */}
-  <span className="text-[9px] tracking-[0.2em] text-primary">
-    AL KHALEEJ MANAGEMENT CONSULTANTS
-  </span>
-</div>
+            <div className="flex flex-col items-center gap-0.5">
+              <Image src="/images/logo.svg" alt="AFAQ" width={56} height={56} className="h-14 w-14 object-contain" />
+              <span className="text-[9px] tracking-[0.2em] text-primary">
+                AL KHALEEJ MANAGEMENT CONSULTANTS
+              </span>
+            </div>
 
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-muted-foreground">
               Connecting Investors with trusted opportunities and empowering
@@ -129,9 +142,11 @@ export default function Footer() {
         <div className="mt-14 flex flex-col items-center gap-4 border-t border-border pt-10 sm:flex-row sm:justify-center sm:gap-6">
           <span className="text-sm font-semibold text-muted-foreground">Follow Us On</span>
           {socialLinks.map(({ icon: Icon, label, href }) => (
-            <Link
+            <a
               key={label}
               href={href}
+              target="_blank"
+              rel="noopener noreferrer"
               aria-label={label}
               className="flex items-center gap-2 text-sm text-foreground/90 transition-colors hover:text-primary"
             >
@@ -139,7 +154,7 @@ export default function Footer() {
                 <Icon size={14} />
               </span>
               {label}
-            </Link>
+            </a>
           ))}
         </div>
       </motion.div>

@@ -241,7 +241,7 @@ export default function EvaluationProcess() {
 
             <div className="mt-6 flex flex-col gap-3">
               <Link
-                href="/contact-us"
+                href="#submit-business"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-gold px-6 py-3 text-sm font-semibold text-background transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.02] hover:shadow-[0_0_24px_rgba(235,184,17,0.5)]"
               >
                 Submit your Business

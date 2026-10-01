@@ -5,6 +5,24 @@ import BusinessConsultancyHero from "@/components/services/business-consultancy/
 import ConsultancyExpertise from "@/components/services/business-consultancy/ConsultancyExpertise";
 import MarketIntelligence from "@/components/services/business-consultancy/MarketIntelligence";
 import ClosingCta from "@/components/shared/ClosingCta";
+import { Metadata } from "next";
+
+
+export const metadata: Metadata = {
+  title: "Business Consultancy",
+  description:
+    "Afaq Al Khaleej Management Consultants provides business consultancy across strategy, market research, growth, restructuring, and performance improvement for businesses in the UAE.",
+  alternates: {
+    canonical: "/services/business-consultancy",
+  },
+  openGraph: {
+    title: "Business Consultancy | Afaq Al Khaleej Management Consultants",
+    description:
+      "Strategy and planning, market research, growth and expansion, financial and operational strategy, restructuring, and risk assessment for businesses in the UAE.",
+    url: "/services/business-consultancy",
+  },
+};
+
 
 export default function BusinessConsultancyPage() {
   return (

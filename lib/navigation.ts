@@ -1,4 +1,4 @@
- export type NavLink = {
+export type NavLink = {
   label: string;
   href: string;
   children?: { label: string; href: string }[];
@@ -17,6 +17,7 @@ export const navLinks: NavLink[] = [
       { label: "Company Formation", href: "/services/company-formation" },
       { label: "Feasibility Studies", href: "/services/feasibility-studies" },
       { label: "Digital Business Solutions", href: "/services/digital-business-solutions" },
+      { label: "Finance Management", href: "/services/finance-management" },
     ],
   },
   { label: "Investment Opportunities", href: "/investment-opportunities" },

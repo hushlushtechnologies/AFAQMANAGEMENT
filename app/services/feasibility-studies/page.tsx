@@ -4,6 +4,22 @@ import FeasibilityHero from "@/components/services/feasibility-studies/Feasibili
 import WhatInsideStudy from "@/components/services/feasibility-studies/WhatInsideStudy";
 import WhoNeedsFeasibility from "@/components/services/feasibility-studies/WhoNeedsFeasibility";
 import ClosingCta from "@/components/shared/ClosingCta";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Feasibility Studies",
+  description:
+    "Afaq Al Khaleej Management Consultants prepares feasibility studies covering market research, financial analysis, operational requirements, and risk assessment for businesses and investors in the UAE.",
+  alternates: {
+    canonical: "/services/feasibility-studies",
+  },
+  openGraph: {
+    title: "Feasibility Studies | Afaq Al Khaleej Management Consultants",
+    description:
+      "Market research, financial analysis, operational requirements, and risk assessment to test your business or investment idea before you commit.",
+    url: "/services/feasibility-studies",
+  },
+};
 
 export default function FeasibilityStudiesPage() {
   return (

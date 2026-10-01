@@ -5,6 +5,22 @@ import GovernmentAuthorities from "@/components/services/pro-government-services
 import HowItWorks from "@/components/services/pro-government-services/HowItWorks";
 import ProGovernmentHero from "@/components/services/pro-government-services/ProGovernmentHero";
 import ClosingCta from "@/components/shared/ClosingCta";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "PRO & Government Services",
+  description:
+    "Afaq Al Khaleej Management Consultants handles PRO and government services across the UAE — licensing, visas, Emirates ID, government approvals, VAT and corporate tax registration.",
+  alternates: {
+    canonical: "/services/pro-government-services",
+  },
+  openGraph: {
+    title: "PRO & Government Services | Afaq Al Khaleej Management Consultants",
+    description:
+      "Business licensing, visa services, Emirates ID, government approvals, NOCs, VAT registration, and corporate tax support across the UAE.",
+    url: "/services/pro-government-services",
+  },
+};
 
 export default function ProGovernmentServicesPage() {
   return (

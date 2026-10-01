@@ -1,6 +1,6 @@
  "use client";
  
- import MarqueeBanner from "@/components/ui/MarqueeBanner";
+import MarqueeBanner from "@/components/ui/MarqueeBanner";
  
 import {
   TrendingUp,
@@ -49,17 +49,18 @@ export default function Services() {
             image="/images/services/investment-services.png"
             title="Investment Services"
             description="Strategic investment planning, portfolio management, partnership opportunities, real estate advisory, and ROI evaluation designed to support informed investment decisions."
-            href="/services/investment-services"
+            href="/services"
             icon={TrendingUp}
             delay={0}
           />
+ 
           <ServiceCard
             image="/images/services/afaq-investors.png"
             title="Afaq Investors & Opportunities"
             description="We help connect investors with business opportunities and facilitate strategic relationships between investors, entrepreneurs, and growing businesses."
-            href="/services/afaq-investors"
+            href="/services"
             icon={Handshake}
-            secondaryCta={{ label: "Interested with Afaq Investment", href: "/contact-us" }}
+            secondaryCta={{ label: "Interested with Afaq Investment", href: "/investment-opportunities#submit-business" }}
             delay={0.1}
           />
         </div>
@@ -71,7 +72,7 @@ export default function Services() {
               image="/images/services/company-formation.png"
               title="Company Formation"
               description="End-to-end company formation support covering business structuring, licensing, registration, and setup across UAE mainland and free zones."
-              href="/services/company-formation"
+              href="/services"
               icon={Building2}
               delay={0}
             />
@@ -79,7 +80,7 @@ export default function Services() {
               image="/images/services/feasibility-studies.png"
               title="Feasibility Studies"
               description="Comprehensive market, financial, operational, and competitive analysis to help determine the viability, potential, and risks of your business idea."
-              href="/services/feasibility-studies"
+              href="/services"
               icon={Search}
               delay={0.15}
             />
@@ -89,7 +90,7 @@ export default function Services() {
             image="/images/services/pro-government.png"
             title="PRO & Government Services"
             description="From licenses and visas to government approvals, tax registration, documentation, and corporate PRO requirements, we help businesses navigate UAE processes efficiently."
-            href="/services/pro-government-services"
+            href="/services"
             icon={ShieldCheck}
             checklist={[
               "Licensing",
@@ -110,7 +111,7 @@ export default function Services() {
             image="/images/services/digital-business.png"
             title="Digital Business Solutions"
             description="Digital platforms, websites, software solutions, automation, and technology services that help businesses operate smarter and grow in a connected economy."
-            href="/services/digital-business-solutions"
+            href="/services"
             icon={Laptop}
             delay={0}
           />
@@ -118,7 +119,7 @@ export default function Services() {
             image="/images/services/business-consultancy.png"
             title="Business Consultancy"
             description="Market research, feasibility studies, financial planning, operational strategy, and risk assessment to help businesses build stronger foundations and sustainable growth."
-            href="/services/business-consultancy"
+            href="/services"
             icon={Briefcase}
             delay={0.1}
           />

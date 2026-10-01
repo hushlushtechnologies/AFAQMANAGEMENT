@@ -9,6 +9,23 @@ import InvestmentOverview from "@/components/services/investment-services/Invest
 import InvestmentServiceHero from "@/components/services/investment-services/InvestmentServiceHero";
 import SectorGrid from "@/components/services/investment-services/SectorGrid";
 import ClosingCta from "@/components/shared/ClosingCta";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Investment Services",
+  description:
+    "Afaq Al Khaleej Management Consultants connects investors with opportunities across real estate, hospitality, technology, and other sectors in the UAE.",
+  alternates: {
+    canonical: "/services/investment-services",
+  },
+  openGraph: {
+    title: "Investment Services | Afaq Al Khaleej Management Consultants",
+    description:
+      "Explore investment opportunities across real estate, hospitality, technology, automotive, events, interiors, and other sectors in the UAE.",
+    url: "/services/investment-services",
+  },
+};
+
 
 export default function InvestmentServicesPage() {
   return (

@@ -38,7 +38,7 @@ const steps = [
 
 export default function OurStory() {
   return (
-    <section className="mx-4 my-16 md:mx-8 lg:mx-12 lg:my-28">
+    <section id="our-story" className="mx-4 my-16 md:mx-8 lg:mx-12 lg:my-28">
       <div className="mx-auto max-w-3xl px-6 text-center">
         <motion.h2
           initial={{ opacity: 0, y: 16 }}

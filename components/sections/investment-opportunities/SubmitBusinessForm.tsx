@@ -6,10 +6,9 @@ import emailjs from "@emailjs/browser";
 import { User, Mail, Phone, Store, Globe, Upload, TrendingUp, BarChart3, Users, ShieldCheck, LucideIcon } from "lucide-react";
 import FormSelect from "../shared/FormSelect";
 
-// TODO: replace with your real EmailJS IDs (https://dashboard.emailjs.com)
-const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";
-const EMAILJS_TEMPLATE_ID = "YOUR_SUBMIT_BUSINESS_TEMPLATE_ID";
-const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
+const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SUBMIT_SERVICE_ID!;
+const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_SUBMIT_TEMPLATE_ID!;
+const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_SUBMIT_PUBLIC_KEY!;
 
 const trustItems: { icon: LucideIcon; title: string; description: string }[] = [
   { icon: TrendingUp, title: "Strong Market Opportunities", description: "Large addressable market with clear growth potential" },
@@ -121,7 +120,7 @@ export default function SubmitBusinessForm() {
   }
 
   return (
-    <section className="mx-4 mb-20 md:mx-8 lg:mx-12">
+    <section className="mx-4 mb-20 md:mx-8 lg:mx-12" id="submit-business">
       <motion.div
         initial={{ opacity: 0, y: 32 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -318,7 +317,10 @@ export default function SubmitBusinessForm() {
               onChange={(v) => update("industry", v)}
             />
 
-            <div>
+            {/* File upload temporarily hidden — EmailJS free plan can't send the
+                actual file, only its name, so this was misleading to submitters.
+                Re-enable once a real upload path (e.g. Nodemailer + storage) is wired up. */}
+            {/* <div>
               <label className="text-sm text-foreground">Pitch Deck / Supporting Document</label>
               <input
                 ref={fileInputRef}
@@ -340,7 +342,7 @@ export default function SubmitBusinessForm() {
                 </span>
                 <Upload size={18} className="shrink-0 text-primary" />
               </button>
-            </div>
+            </div> */}
 
             <div>
               <label className="text-sm text-foreground">Brief Description about your business</label>

@@ -5,6 +5,23 @@ import MainlandVsFreezone from "@/components/services/company-formation/Mainland
 import WeHandleEverything from "@/components/services/company-formation/WeHandleEverything";
 import WhyAfaqPartner from "@/components/services/company-formation/WhyAfaqPartner";
 import ClosingCta from "@/components/shared/ClosingCta";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Company Formation",
+  description:
+    "Afaq Al Khaleej Management Consultants helps you set up your business across UAE mainland and free zones — structuring, licensing, registration, and visas, handled end to end.",
+  alternates: {
+    canonical: "/services/company-formation",
+  },
+  openGraph: {
+    title: "Company Formation | Afaq Al Khaleej Management Consultants",
+    description:
+      "Mainland and free zone company formation in the UAE — business structuring, licensing, registration, and visa support, handled end to end.",
+    url: "/services/company-formation",
+  },
+};
+
 
 export default function CompanyFormationPage() {
   return (

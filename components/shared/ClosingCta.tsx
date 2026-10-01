@@ -40,12 +40,12 @@ export default function ClosingCta() {
               Book a Consultation
               <ArrowRight size={16} />
             </Link>
-            <Link
+            {/* <Link
               href="/contact-us"
               className="rounded-full bg-gradient-silver px-6 py-3 text-sm font-semibold text-background transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.03] hover:shadow-[0_0_20px_rgba(180,180,180,0.5)]"
             >
               Contact Our Team
-            </Link>
+            </Link> */}
           </div>
         </div>
 

@@ -37,6 +37,8 @@ export default function CompanyCard({
   delay = 0,
 }: CompanyCardProps) {
   const colors = accentClasses[accent];
+  const isExternal = /^https?:\/\//.test(href);
+  const linkClassName = `group/btn mt-4 inline-flex w-fit items-center gap-1.5 rounded-full border ${colors.border} px-5 py-2 text-sm font-semibold ${colors.text} transition-all duration-300 ${colors.hoverBg} hover:text-background`;
 
   return (
     <motion.div
@@ -67,13 +69,17 @@ export default function CompanyCard({
         <span className={`mt-1 text-sm font-semibold ${colors.text}`}>{category}</span>
         <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{description}</p>
 
-        <Link
-          href={href}
-          className={`group/btn mt-4 inline-flex w-fit items-center gap-1.5 rounded-full border ${colors.border} px-5 py-2 text-sm font-semibold ${colors.text} transition-all duration-300 ${colors.hoverBg} hover:text-background`}
-        >
-          Visit Company
-          <ArrowRight size={14} className="transition-transform duration-300 group-hover/btn:translate-x-1" />
-        </Link>
+        {isExternal ? (
+          <a href={href} target="_blank" rel="noopener noreferrer" className={linkClassName}>
+            Visit Company
+            <ArrowRight size={14} className="transition-transform duration-300 group-hover/btn:translate-x-1" />
+          </a>
+        ) : (
+          <Link href={href} className={linkClassName}>
+            Visit Company
+            <ArrowRight size={14} className="transition-transform duration-300 group-hover/btn:translate-x-1" />
+          </Link>
+        )}
       </div>
     </motion.div>
   );

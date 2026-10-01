@@ -19,10 +19,10 @@ import {
 } from "react-icons/fa6";
 
 const socialLinks = [
-  { icon: FaWhatsapp, href: "#", label: "WhatsApp" },
-  { icon: FaLinkedinIn, href: "#", label: "LinkedIn" },
-  { icon: FaInstagram, href: "#", label: "Instagram" },
-  { icon: FaFacebookF, href: "#", label: "Facebook" },
+  { icon: FaWhatsapp, href: "https://wa.me/971527094940", label: "WhatsApp" },
+  { icon: FaLinkedinIn, href: "https://www.linkedin.com", label: "LinkedIn" },
+  { icon: FaInstagram, href: "https://www.instagram.com/afaq_alkhaleej_uae", label: "Instagram" },
+  { icon: FaFacebookF, href: "https://www.facebook.com", label: "Facebook" },
 ];
 
 const stats = [
