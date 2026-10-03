@@ -172,7 +172,7 @@ export default function Hero() {
   </Link>
   <Link
     href="/contact-us"
-    className="flex w-full items-center justify-center rounded-full border-2 border-accent-blue px-7 py-3 text-sm font-semibold text-background transition-all duration-300 hover:-translate-y-0.5 hover:bg-accent-blue hover:text-foreground hover:shadow-[0_0_24px_rgba(29,123,224,0.45)] sm:w-auto"
+    className="flex w-full items-center     justify-center rounded-full bg-white px-7 py-3 text-sm font-semibold text-accent-blue transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.03] hover:shadow-[0_0_24px_rgba(29,123,224,0.4)] sm:w-auto"
   >
     Book a Consultation
   </Link>
@@ -181,7 +181,7 @@ export default function Hero() {
         {/* stats bar — nested stagger + per-item hover */}
         <motion.div
           variants={statsContainerVariants}
-          className="mx-auto mt-14 flex max-w-4xl flex-col gap-6 rounded-3xl border border-foreground bg-white/10 px-8 py-6 backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between"
+          className="mx-auto mt-14 flex max-w-4xl flex-col gap-6  rounded-3xl border border-foreground bg-white/10 px-8 py-6 backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between"
         >
           {stats.map(({ icon: Icon, label }) => (
             <motion.div
