@@ -1,9 +1,12 @@
  "use client";
 
-import { useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import emailjs from "@emailjs/browser";
-import { User, Mail, Phone, Store, Globe, Upload, TrendingUp, BarChart3, Users, ShieldCheck, LucideIcon } from "lucide-react";
+import { countries } from "countries-list";
+import { City } from "country-state-city";
+import { isValidPhoneNumber } from "libphonenumber-js";
+import { User, Mail, Phone, Store, Globe, Upload, TrendingUp, BarChart3, Users, ShieldCheck, LucideIcon, ChevronDown, CheckCircle2, X } from "lucide-react";
 import FormSelect from "../shared/FormSelect";
 
 const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SUBMIT_SERVICE_ID!;
@@ -17,8 +20,21 @@ const trustItems: { icon: LucideIcon; title: string; description: string }[] = [
   { icon: ShieldCheck, title: "Sustainable Advantages", description: "Clear differential and barriers that create defensibility" },
 ];
 
-const countryOptions = ["United Arab Emirates", "Saudi Arabia", "Bahrain", "Qatar", "Other"];
-const cityOptions = ["Dubai", "Abu Dhabi", "Sharjah", "Ajman", "Ras Al Khaimah", "Other"];
+// full country list, alphabetical — used for "Country" and "Country of Operation"
+const countryList = Object.values(countries)
+  .map((c) => c.name)
+  .sort((a, b) => a.localeCompare(b));
+
+// country name -> ISO2, needed to look up cities for the selected "Country of Operation"
+const countryNameToIso2 = Object.fromEntries(
+  Object.entries(countries).map(([iso2, c]) => [c.name, iso2])
+) as Record<string, string>;
+
+// unique dial codes only, numerically sorted — used for the phone country-code select
+const phoneCountryCodes = Array.from(
+  new Set(Object.values(countries).map((c) => `+${c.phone}`))
+).sort((a, b) => Number(a.slice(1)) - Number(b.slice(1)));
+
 const industryOptions = ["Technology", "Real Estate", "Hospitality", "Automotive", "Retail", "Investment & Finance", "Other"];
 
 const initialForm = {
@@ -49,7 +65,9 @@ function validate(values: FormState): FormErrors {
 
   const phoneDigits = values.phone.trim();
   if (!phoneDigits) errs.phone = "Phone number is required";
-  else if (!/^\d{9}$/.test(phoneDigits)) errs.phone = "Enter a valid 9 digit phone number";
+  else if (!isValidPhoneNumber(`${values.countryCode}${phoneDigits}`)) {
+    errs.phone = "Enter a valid phone number for the selected country";
+  }
 
   if (!values.country) errs.country = "Please select your country";
 
@@ -60,6 +78,239 @@ function validate(values: FormState): FormErrors {
     errs.companyWebsite = "Enter a valid URL (starting with http:// or https://)";
 
   return errs;
+}
+
+function CountryCodeSelect({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+        setQuery("");
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const filtered = phoneCountryCodes.filter((code) => code.includes(query.trim()));
+
+  return (
+    <div ref={ref} className="relative w-24 shrink-0">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        className="flex w-full items-center justify-between gap-1 rounded-xl border border-border bg-surface px-3 py-3 text-sm text-foreground focus:border-primary focus:outline-none"
+      >
+        {value}
+        <ChevronDown size={14} className={`text-muted-foreground transition-transform ${open ? "rotate-180" : ""}`} />
+      </button>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 8 }}
+            transition={{ duration: 0.15 }}
+            className="absolute left-0 top-full z-20 mt-2 w-40 overflow-hidden rounded-xl border border-border bg-card shadow-xl"
+          >
+            <input
+              autoFocus
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value.replace(/[^\d+]/g, ""))}
+              placeholder="Search code"
+              className="w-full border-b border-border bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+            />
+            <div className="max-h-48 overflow-y-auto">
+              {filtered.length === 0 && <p className="px-3 py-2 text-xs text-muted-foreground">No match</p>}
+              {filtered.map((code) => (
+                <button
+                  key={code}
+                  type="button"
+                  onClick={() => {
+                    onChange(code);
+                    setOpen(false);
+                    setQuery("");
+                  }}
+                  className={`block w-full px-3 py-2 text-left text-sm hover:bg-surface ${
+                    code === value ? "text-primary" : "text-foreground"
+                  }`}
+                >
+                  {code}
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+function SearchableSelect({
+  label,
+  placeholder,
+  options,
+  value,
+  onChange,
+  disabled = false,
+  error,
+}: {
+  label: string;
+  placeholder: string;
+  options: string[];
+  value: string;
+  onChange: (v: string) => void;
+  disabled?: boolean;
+  error?: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+        setQuery("");
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const filtered = options.filter((opt) => opt.toLowerCase().includes(query.trim().toLowerCase()));
+
+  return (
+    <div>
+      <label className="text-sm text-foreground">{label}</label>
+      <div ref={ref} className="relative mt-2">
+        <button
+          type="button"
+          disabled={disabled}
+          onClick={() => setOpen((o) => !o)}
+          className={`flex w-full items-center justify-between rounded-xl border bg-surface px-4 py-3 text-left text-sm focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 ${
+            error ? "border-red-500" : "border-border focus:border-primary"
+          } ${value ? "text-foreground" : "text-muted-foreground"}`}
+        >
+          {value || placeholder}
+          <ChevronDown size={16} className={`text-muted-foreground transition-transform ${open ? "rotate-180" : ""}`} />
+        </button>
+
+        <AnimatePresence>
+          {open && !disabled && (
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 8 }}
+              transition={{ duration: 0.15 }}
+              className="absolute left-0 top-full z-20 mt-2 w-full overflow-hidden rounded-xl border border-border bg-card shadow-xl"
+            >
+              <input
+                autoFocus
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder={`Search ${label.toLowerCase()}`}
+                className="w-full border-b border-border bg-transparent px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+              />
+              <div className="max-h-56 overflow-y-auto">
+                {filtered.length === 0 && <p className="px-4 py-2.5 text-xs text-muted-foreground">No match</p>}
+                {filtered.slice(0, 200).map((opt) => (
+                  <button
+                    key={opt}
+                    type="button"
+                    onClick={() => {
+                      onChange(opt);
+                      setOpen(false);
+                      setQuery("");
+                    }}
+                    className={`block w-full px-4 py-2.5 text-left text-sm hover:bg-surface ${
+                      opt === value ? "text-primary" : "text-foreground"
+                    }`}
+                  >
+                    {opt}
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+      {error && <p className="mt-1 text-xs text-red-500">{error}</p>}
+    </div>
+  );
+}
+
+function SuccessModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
+  return (
+    <AnimatePresence>
+      {open && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            onClick={onClose}
+            className="absolute inset-0 bg-background/70 backdrop-blur-sm"
+          />
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="relative z-10 w-full max-w-sm rounded-2xl border border-primary bg-card p-8 text-center shadow-2xl"
+          >
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Close"
+              className="absolute right-4 top-4 text-muted-foreground hover:text-foreground"
+            >
+              <X size={18} />
+            </button>
+
+            <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-primary text-primary">
+              <CheckCircle2 size={28} />
+            </span>
+
+            <h3 className="mt-5 text-xl font-semibold text-foreground">Submission Received</h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              Thanks — your business submission has been received. Our team will review it and be in touch shortly.
+            </p>
+
+            <button
+              type="button"
+              onClick={onClose}
+              className="mt-6 w-full rounded-full bg-gradient-gold px-6 py-3 text-sm font-semibold text-background transition-all duration-300 hover:scale-[1.01]"
+            >
+              Close
+            </button>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
+  );
 }
 
 export default function SubmitBusinessForm() {
@@ -74,6 +325,19 @@ export default function SubmitBusinessForm() {
   function update<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((prev) => ({ ...prev, [key]: value }));
     if (errors[key]) setErrors((prev) => ({ ...prev, [key]: undefined }));
+  }
+
+  // cities for the currently selected "Country of Operation"
+  const cityOptions = useMemo(() => {
+    const iso2 = countryNameToIso2[form.countryOfOperation];
+    if (!iso2) return [];
+    const cities = City.getCitiesOfCountry(iso2) ?? [];
+    return Array.from(new Set(cities.map((c) => c.name))).sort((a, b) => a.localeCompare(b));
+  }, [form.countryOfOperation]);
+
+  function updateCountryOfOperation(v: string) {
+    setForm((prev) => ({ ...prev, countryOfOperation: v, city: "" }));
+    setErrors((prev) => ({ ...prev, countryOfOperation: undefined, city: undefined }));
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -161,12 +425,6 @@ export default function SubmitBusinessForm() {
 
           {/* right — form */}
           <form onSubmit={handleSubmit} noValidate className="space-y-5">
-            {submitted && (
-              <div className="rounded-xl border border-primary bg-surface px-4 py-3 text-sm text-foreground">
-                Thanks — your business submission has been received. Our team will review it and be in touch shortly.
-              </div>
-            )}
-
             {submitError && (
               <div className="rounded-xl border border-red-500 bg-surface px-4 py-3 text-sm text-red-500">
                 {submitError}
@@ -217,23 +475,14 @@ export default function SubmitBusinessForm() {
                   Phone Number <span className="text-primary">*</span>
                 </label>
                 <div className="mt-2 flex gap-2">
-                  <select
-                    value={form.countryCode}
-                    onChange={(e) => update("countryCode", e.target.value)}
-                    className="w-20 shrink-0 rounded-xl border border-border bg-surface px-2 text-sm text-foreground focus:border-primary focus:outline-none"
-                  >
-                    <option value="+971">+971</option>
-                    <option value="+966">+966</option>
-                    <option value="+973">+973</option>
-                    <option value="+974">+974</option>
-                  </select>
+                  <CountryCodeSelect value={form.countryCode} onChange={(v) => update("countryCode", v)} />
                   <div className="relative flex-1">
                     <input
                       type="tel"
                       value={form.phone}
-                      onChange={(e) => update("phone", e.target.value.replace(/\D/g, "").slice(0, 9))}
+                      onChange={(e) => update("phone", e.target.value.replace(/\D/g, "").slice(0, 14))}
                       placeholder="Enter your Number"
-                      maxLength={9}
+                      maxLength={14}
                       className={`w-full rounded-xl border bg-surface px-4 py-3 pr-10 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none ${
                         errors.phone ? "border-red-500" : "border-border focus:border-primary"
                       }`}
@@ -247,7 +496,7 @@ export default function SubmitBusinessForm() {
               <FormSelect
                 label="Country"
                 placeholder="Pick your Country"
-                options={countryOptions}
+                options={countryList}
                 value={form.country}
                 onChange={(v) => update("country", v)}
                 required
@@ -295,17 +544,19 @@ export default function SubmitBusinessForm() {
               <FormSelect
                 label="Country of Operation"
                 placeholder="Pick your Country"
-                options={countryOptions}
+                options={countryList}
                 value={form.countryOfOperation}
-                onChange={(v) => update("countryOfOperation", v)}
+                onChange={updateCountryOfOperation}
               />
 
-              <FormSelect
+              <SearchableSelect
                 label="City"
-                placeholder="Pick your City"
+                placeholder={form.countryOfOperation ? "Pick your City" : "Select a country first"}
                 options={cityOptions}
                 value={form.city}
                 onChange={(v) => update("city", v)}
+                disabled={!form.countryOfOperation}
+                error={errors.city}
               />
             </div>
 
@@ -371,6 +622,8 @@ export default function SubmitBusinessForm() {
           </form>
         </div>
       </motion.div>
+
+      <SuccessModal open={submitted} onClose={() => setSubmitted(false)} />
     </section>
   );
 }

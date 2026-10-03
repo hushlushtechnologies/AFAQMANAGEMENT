@@ -1,4 +1,4 @@
-"use client";
+ "use client";
 
 import { motion } from "framer-motion";
 import CompanyCard from "./CompanyCard";
@@ -14,6 +14,7 @@ const companies = [
     description: "Connecting investors, entrepreneurs and business with trusted opportunities and end to end business solutions across the UAE",
     accent: "gold" as const,
     href: "https://www.afaqmanagement.com/",
+    isParent: true,
   },
   {
     image: "/images/companies/optimus-cars.jpg",
@@ -42,7 +43,7 @@ const companies = [
     name: "Hush Lush Technologies",
     category: "Technology & Digital Solutions",
     description: "Building digital experience, software solution, creative technology, branding and growth-focused digital ecosystem",
-    accent: "purple" as const,
+    accent: "gold" as const,
     href: "https://www.hushlushtechnologies.com/",
   },
   {
@@ -56,7 +57,7 @@ const companies = [
     href: "https://www.optimusmegatroncarsgarage.com/",
   },
   {
-    image: "/images/companies/afaq-properties.jpg",
+   image: "/images/companies/afaq-barakha.jpg",
     logo: "/images/afaq-properties.png",
     subBrand: "AL MANZIL PROPERTIES",
     name: "Afaq Al Manzil Properties",
@@ -66,7 +67,8 @@ const companies = [
     href: "https://www.afaqalmanzilproperties.com/",
   },
   {
-    image: "/images/companies/afaq-barakha.jpg",
+     image: "/images/companies/afaq-properties.jpg",
+   
     logo: "/images/afaq-barakha.png",
     subBrand: "AL BARAKHA INVESTMENT",
     name: "Afaq Al Barakha Investment",
@@ -92,7 +94,7 @@ const companies = [
     name: "Hush Lush Hospitality",
     category: "Hospitality & Lifestyle Products",
     description: "Delivering thoughtful hospitality and lifestyle experience build around quality, service and customer satisfaction",
-    accent: "orange" as const,
+    accent: "gold" as const,
     href: "https://www.hushlushs.com/",
   },
 ];

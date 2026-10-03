@@ -1,4 +1,4 @@
- "use client";
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -266,14 +266,14 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
               transition={{ duration: 0.35, delay: 0.3 }}
               className="mt-auto flex flex-col gap-3 pt-6"
             >
-              <div className="flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-2.5">
+              {/* <div className="flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-2.5">
                 <Search size={16} className="text-muted-foreground" />
                 <input
                   type="text"
                   placeholder="Search.."
                   className="w-full bg-transparent text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
                 />
-              </div>
+              </div> */}
 
               <Link
                 href="/contact-us"
@@ -291,7 +291,6 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
 }
 
 export default function Navbar() {
-  const [group1, group2] = [navLinks.slice(0, 2), navLinks.slice(2)];
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
 
@@ -318,12 +317,9 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Nav groups */}
+        {/* Nav links */}
         <div className="hidden items-center lg:flex">
-          <div className="mx-8 h-8 w-px bg-border" />
-          <NavGroup links={group1} />
-          <div className="mx-10 h-8 w-px bg-border" />
-          <NavGroup links={group2} />
+          <NavGroup links={navLinks} />
         </div>
 
         <ContactButton />

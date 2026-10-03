@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Crown } from "lucide-react";
 
 type Accent = "gold" | "purple" | "orange";
 
@@ -22,6 +22,7 @@ type CompanyCardProps = {
   description: string;
   accent: Accent;
   href: string;
+  isParent?: boolean;
   delay?: number;
 };
 
@@ -34,6 +35,7 @@ export default function CompanyCard({
   description,
   accent,
   href,
+  isParent = false,
   delay = 0,
 }: CompanyCardProps) {
   const colors = accentClasses[accent];
@@ -55,7 +57,10 @@ export default function CompanyCard({
         unoptimized
         className="object-cover transition-transform duration-700 group-hover:scale-110"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/75 to-background/10" />
+      <div
+        className="absolute inset-0"
+        style={{ background: "linear-gradient(270deg, rgba(5, 12, 25, 0) -8.63%, #050C19 56.43%)" }}
+      />
 
       {/* logo — anchored to the top of the image, independent of the text block */}
       <div className="absolute left-6 top-6 z-10">
@@ -69,7 +74,12 @@ export default function CompanyCard({
         <span className={`mt-1 text-sm font-semibold ${colors.text}`}>{category}</span>
         <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{description}</p>
 
-        {isExternal ? (
+        {isParent ? (
+          <span className={`mt-4 inline-flex w-fit items-center gap-1.5 text-sm font-semibold ${colors.text}`}>
+            Parent Company
+            <Crown size={14} />
+          </span>
+        ) : isExternal ? (
           <a href={href} target="_blank" rel="noopener noreferrer" className={linkClassName}>
             Visit Company
             <ArrowRight size={14} className="transition-transform duration-300 group-hover/btn:translate-x-1" />
