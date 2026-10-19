@@ -10,6 +10,7 @@ import {
   ShieldCheck,
   Laptop,
   Briefcase,
+  Wallet,
 } from "lucide-react";
 import ServiceCard from "./ServiceCard";
 
@@ -124,6 +125,16 @@ export default function Services() {
             delay={0.1}
           />
         </div>
+
+        {/* row 4 — full-width card */}
+        <ServiceCard
+          image="/images/services/business-consultancy.png"
+          title="Finance Management & CFO Advisory"
+          description="A professional finance management and business advisory model designed to support SMEs, growing businesses, and group companies across the UAE."
+          href="/services"
+          icon={Wallet}
+          delay={0}
+        />
       </div>
     </section>
   );
