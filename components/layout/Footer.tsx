@@ -11,17 +11,24 @@ const quickLinks = [
   { label: "About Us", href: "/about-us" },
   { label: "Contact Us", href: "/contact-us" },
   { label: "Our Group", href: "/#group-companies" },
-  { label: "Afaq Investment Opportunities", href: "/investment-opportunities" },
+  // { label: "Afaq Investment Opportunities", href: "/investment-opportunities" }, // hidden for now
 ];
 
 const serviceLinks = [
-  { label: "Investment Services", href: "/services/investment-services" },
-  { label: "Business Consultancy", href: "/services/business-consultancy" },
-  { label: "PRO & Government Services", href: "/services/pro-government-services" },
-  { label: "Company Formation", href: "/services/company-formation" },
-  { label: "Digital Business Solutions", href: "/services/digital-business-solutions" },
-  { label: "Investors & Opportunities", href: "/services/afaq-investors" },
+  { label: "Business Setup", href: "/contact-us" },
+  { label: "Accounting & Tax", href: "/contact-us" },
+  { label: "Business Support", href: "/contact-us" },
 ];
+
+// Previous service list — hidden for now, restore when needed.
+// const serviceLinks = [
+//   { label: "Investment Services", href: "/services/investment-services" },
+//   { label: "Business Consultancy", href: "/services/business-consultancy" },
+//   { label: "PRO & Government Services", href: "/services/pro-government-services" },
+//   { label: "Company Formation", href: "/services/company-formation" },
+//   { label: "Digital Business Solutions", href: "/services/digital-business-solutions" },
+//   { label: "Investors & Opportunities", href: "/services/afaq-investors" },
+// ];
 
 const groupLinks = [
   { label: "Afaq Al Khaleej Management Consultant", href: "https://www.afaqmanagement.com/" },

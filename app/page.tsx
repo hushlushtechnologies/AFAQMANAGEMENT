@@ -9,7 +9,8 @@ import ProServicesCloud from "@/components/sections/shared/ProServicesCloud";
 import WhyAfaq from "@/components/sections/home/WhyAfaq";
 import GroupCompanies from "@/components/shared/GroupCompanies";
 import SeekingInvestmentSplit from "@/components/sections/shared/SeekingInvestmentSplit";
-import Services from "@/components/shared/Services";
+import ParentServices from "@/components/sections/home/ParentServices";
+// import Services from "@/components/shared/Services"; // old service cards (still used on /services)
 import InvestmentSection from "@/components/sections/home/InvestmentSection";
 import { Metadata } from "next";
 
@@ -23,7 +24,8 @@ export default function Home() {
       <Hero />
       <About />
 
-      <Services />
+      <ParentServices />
+      {/* <Services /> */}
       {/* <InvestmentHighlights />
       <SeekingInvestmentSplit /> */}
       <InvestmentSection />
